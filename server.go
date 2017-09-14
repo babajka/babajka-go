@@ -13,24 +13,32 @@ import (
 func handleArticle(w http.ResponseWriter, r *http.Request) {
 	ss := strings.Split(r.URL.Path, "/")
 	aid, _ := strconv.Atoi(ss[2])
-	if aid != 1 && aid != 2 {
-		aid = 1
-	}
 	article := articles[aid]
 
 	articleWrapper := ArticlePage{
 		Article:  article,
-		Featured: []int{1, 2, 3},
+		Featured: []Article{articles[1], articles[2], articles[3]},
 	}
 
 	fmt.Println("requesting article", aid)
-	tmpl, _ := template.ParseFiles("./templates/article.html")
+	tmpl, _ := template.ParseFiles("./templates/article.html", "./templates/navbar.html")
+
 	tmpl.Execute(w, articleWrapper)
 }
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles("./templates/login.html")
-	tmpl.Execute(w, articles[1])
+	tmpl, _ := template.ParseFiles("./templates/login.html", "./templates/navbar.html")
+	tmpl.Execute(w, nil)
+}
+
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("./templates/index.html", "./templates/navbar.html")
+
+	indexPage := &IndexPage{
+		Top3: []Article{articles[1], articles[2], articles[3]},
+	}
+
+	tmpl.Execute(w, indexPage)
 }
 
 func defineStaticRoutes() {
@@ -50,10 +58,9 @@ func initDB() {
 func main() {
 	fmt.Println("initializing server...")
 
-	http.Handle("/", http.FileServer(http.Dir("./templates")))
-
 	defineStaticRoutes()
 
+	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/articles/", handleArticle)
 	http.HandleFunc("/login/", handleLogin)
 

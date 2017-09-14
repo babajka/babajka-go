@@ -12,57 +12,7 @@
 
 <body>
 
-<div class="navbar-container">
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/index.html">
-                <span class="logo-text">WIR</span>
-            </a>
-
-            <div class="navbar-burger burger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <div class="navbar-menu">
-            <div class="navbar-end">
-                <a class="navbar-item" href="">
-                    <span class="span-text left-span">ЛЕКЦЫI</span>
-                </a>
-                <a class="navbar-item" href="/main-page/main-page.html">
-                    <span class="span-text">АРТЫКУЛЫ</span>
-                </a>
-                <a class="navbar-item" href="">
-                    <span class="span-text right-span">ІНТЭРАКТЫЎ</span>
-                </a>
-
-                <a class="navbar-item" href="">
-                    <span class="icon is-small is-left">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </a>
-
-                <a class="navbar-item" href="/login">
-                    <span class="span-text">УВАЙСЦІ</span>
-                </a>
-            </div>
-
-            <div class="navbar-item lang">
-                <a class="navbar-item lang-item" href="">
-                    BY
-                </a>
-                <a class="navbar-item lang-item center" href="">
-                    RU
-                </a>
-                <a class="navbar-item lang-item" href="">
-                    EN
-                </a>
-            </div>
-        </div>
-    </nav>
-</div>
+{{template "navbar" .}}
 
 <div class="article-page page-container">
 
@@ -75,7 +25,7 @@
 
         <div class="card-content">
             <div class="heading">
-              {{.Article.Title}} {{.Article.ID}}
+              {{.Article.Title}}
             </div>
 
             <div class="author">
@@ -106,16 +56,16 @@
                     <article class="card tile is-child">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                                <img src="../images/photo5.jpg" />
+                                <img src={{.Photo}} />
                             </figure>
                         </div>
                         <div class="card-content">
                         <span class="title is-spaced">
-                            <a href="/articles">
-                                Крама "як з крамы"
+                            <a href={{.ID}}>
+                                {{.Title}}
                             </a>
                         </span>
-                            <p class="subtitle">Новы альбом: як, дзе і для каго</p>
+                            <p class="subtitle">{{.Title}}</p>
                         </div>
                     </article>
                 </div>
