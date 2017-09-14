@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -49,8 +50,10 @@ func main() {
 	http.HandleFunc("/articles/", handleArticle)
 	http.HandleFunc("/login/", handleLogin)
 
-	fmt.Println("Listening on port :8080")
-	http.ListenAndServe(":8080", nil)
+	port := os.Getenv("PORT")
+
+	fmt.Printf("listening on port :%s\n", port)
+	http.ListenAndServe(":"+port, nil)
 }
 
 // Article ololo.
