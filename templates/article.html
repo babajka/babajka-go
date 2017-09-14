@@ -69,28 +69,29 @@
     <div class="page-content">
         <div class="card-image">
             <figure class="image is-3by1">
-                <img src="/images/photo8.jpg" />
+                <img src="{{.Article.Photo}}" />
             </figure>
         </div>
 
         <div class="card-content">
             <div class="heading">
-              {{.Title}} {{.ID}}
+              {{.Article.Title}} {{.Article.ID}}
             </div>
 
             <div class="author">
                 <strong>Аўтар:</strong>
-                <a href="">{{.Author}}</a>
+                <a href="">{{.Article.Author}}</a>
             </div>
 
             <div class="tags">
-                <a href="">#паэзія</a>
-                <a href=""> #морт</a>
+              {{range .Article.Hashtags}}
+                <a href="">{{.}}</a>
+                {{end}}
             </div>
             <hr />
 
             <div class="text">
-                {{.Text}}
+                {{.Article.Text}}
                 <hr />
             </div>
         </div>
