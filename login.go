@@ -6,6 +6,6 @@ import (
 )
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles("./templates/login.html", "./templates/navbar.html", "./templates/footer.html")
+	tmpl, _ := template.ParseFiles(templateList("login/base", "navbar", "footer", "header")...)
 	tmpl.Execute(w, nil)
 }

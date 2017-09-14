@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// Article struct.
+// Article model.
 type Article struct {
 	ID        int
 	Title     string
@@ -19,7 +19,7 @@ type Article struct {
 	IsSpecial bool
 }
 
-// ArticlePage is a wrapper for Article.
+// ArticlePage is a wrapper for Article to render the page.
 type ArticlePage struct {
 	Article  Article
 	Featured []Article
@@ -36,7 +36,7 @@ func handleArticle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("requesting article", aid)
-	tmpl, _ := template.ParseFiles("./templates/article.html", "./templates/navbar.html", "./templates/footer.html")
+	tmpl, _ := template.ParseFiles(templateList("article/base", "navbar", "footer", "article/featured-tile", "header")...)
 
 	tmpl.Execute(w, articleWrapper)
 }

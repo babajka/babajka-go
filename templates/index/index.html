@@ -1,62 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Main Page</title>
-    <link rel="stylesheet" href="/styles/bundle.min.css" />
-    <link rel="stylesheet" href="/styles/assets.min.css" />
-</head>
+{{template "header" .}}
 
 <body>
+
 {{template "navbar" .}}
 
 <div class="main-page page-container">
     <div class="page-content">
 
         <!-- FIRST LINE -->
-
         <div class="first-line tile is-ancestor">
-
           {{range .Top3}}
-
-            <div class="tile is-parent">
-                <article class="card tile is-child">
-                    <div class="card-image">
-                        <figure class="image is-16by9">
-                            <img src={{.Photo}} />
-                        </figure>
-                        {{if .IsSpecial}}
-                        <div class="media special-heading">
-                            <div class="media-left">
-                                <figure class="image is-32x32">
-                                    <img src="../images/15_icon.png" />
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <span class="subtitle is-6">Мінск</span>
-                            </div>
-                        </div>
-                        {{end}}
-                    </div>
-                    <div class="card-content">
-                        <span class="title is-spaced">
-                            <a href={{printf "articles/%v" .ID}}>
-                                {{.Title}}
-                            </a>
-                        </span>
-                        <p class="subtitle">{{.Title}}</p>
-                        <p class="subtitle author is-4">{{.Author}}</p>
-                    </div>
-                </article>
-            </div>
-
-            {{end}}
+            {{template "regular-tile" .}}
+          {{end}}
         </div>
-
         <!--FIRST LINE END-->
+
         <!--SECOND LINE-->
 <!--
         <div class="second-line tile is-ancestor">
