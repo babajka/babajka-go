@@ -1,1 +1,1 @@
-web: wir-dev1
+web: go run server.go
