@@ -26,7 +26,7 @@ func defineStaticRoutes() {
 func populateDB() {
 	has, err := db.Exist(&Article{})
 	if err != nil {
-		fmt.Println("exist check failed")
+		fmt.Println("exist check failed: ", err)
 		return
 	}
 	if has {
