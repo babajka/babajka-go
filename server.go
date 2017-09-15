@@ -92,8 +92,6 @@ func main() {
 
 	parseFlags()
 
-	dev = true
-
 	initDB()
 
 	defineStaticRoutes()
