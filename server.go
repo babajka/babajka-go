@@ -65,6 +65,7 @@ func initDB() {
 	if dbConnection == "" {
 		dbConnection = os.Getenv("DATABASE_URL")
 	}
+	fmt.Println("DB CONNECTION RULES: ", dbConnection)
 
 	var err error
 	db, err = xorm.NewEngine("postgres", dbConnection)
