@@ -1,5 +1,7 @@
 package main
 
+// data.go contains data to populate database on initialization.
+
 var (
 	articles = map[int]Article{
 		1: Article{
