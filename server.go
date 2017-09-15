@@ -27,7 +27,6 @@ func populateDB() {
 	has, err := db.Exist(&Article{})
 	if err != nil {
 		fmt.Println("exist check failed: ", err)
-		return
 	}
 	if has {
 		fmt.Println("article table already exists")
