@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -13,12 +13,12 @@ func defineStaticRoutes() {
 }
 
 func main() {
-	fmt.Println("initializing server...")
-
+	log.Println("initializing server...")
 	parseFlags()
-
-	initDB()
-
+	if err := initDB(); err != nil {
+		log.Println("failed to init db: ", err)
+		return
+	}
 	defineStaticRoutes()
 
 	http.HandleFunc("/", handleIndex)
@@ -30,7 +30,7 @@ func main() {
 		port = "8080"
 	}
 
-	fmt.Printf("listening on port :%s\n", port)
+	log.Printf("listening on port :%s\n", port)
 	http.ListenAndServe(":"+port, nil)
 	db.Close()
 }

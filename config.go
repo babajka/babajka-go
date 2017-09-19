@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 
 	"github.com/go-xorm/xorm"
 )
@@ -19,5 +19,8 @@ func parseFlags() {
 	flag.BoolVar(&dev, "dev", false, "To run in dev mode.")
 	flag.Parse()
 
-	fmt.Println("Dev is on:", dev)
+	log.Printf("SERVER CONFIGURATION: ===========================\n")
+	log.Printf("--dev = %v", dev)
+	log.Printf("--db_connection = %v", dbConnection)
+	log.Printf("=================================================\n")
 }

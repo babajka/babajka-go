@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -33,7 +33,6 @@ func handleArticle(w http.ResponseWriter, r *http.Request) {
 		Featured: []Article{getArticleFromDB("1"), getArticleFromDB("2"), getArticleFromDB("3")},
 	}
 
-	fmt.Println("requesting article", ss[2])
 	tmpl, _ := template.ParseFiles(templateList("article/base", "navbar", "footer", "article/featured-tile", "header")...)
 
 	tmpl.Execute(w, articleWrapper)
@@ -43,10 +42,10 @@ func getArticleFromDB(id string) Article {
 	var article Article
 	has, err := db.Where("i_d = ?", id).Get(&article)
 	if err != nil {
-		fmt.Println("article error:", err)
+		log.Println("article error:", err)
 	}
 	if !has {
-		fmt.Println("article with id ", id, "not found")
+		log.Println("article with id ", id, "not found")
 	}
 	return article
 }

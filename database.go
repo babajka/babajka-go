@@ -1,64 +1,62 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
 )
 
-func populateDB() {
+func initDB() error {
+	log.Println("initializing db...")
+	if dbConnection == "" {
+		dbConnection = os.Getenv("DATABASE_URL")
+	}
+	if dbConnection == "" {
+		return errors.New("no DB connection rules provided")
+	}
+	log.Println("DB connection rules:", dbConnection)
+
+	var err error
+	db, err = xorm.NewEngine("postgres", dbConnection)
+	if err != nil {
+		return err
+	}
+	if dev {
+		db.ShowSQL(true)
+		if err := populateDB(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func populateDB() error {
 	has, err := db.Exist(&Article{})
 	if err != nil {
-		fmt.Println("exist check failed: ", err)
+		return fmt.Errorf("exist check failed: %v", err)
 	}
 	if has {
-		fmt.Println("article table already exists")
-		return
+		log.Println("'Article' table already exists. Skipping population")
+		return nil
 	}
 
 	db.CreateTables(&Article{})
 
 	_, err = db.Insert(articles[1], articles[2], articles[3])
 	if err != nil {
-		fmt.Println("insert error: ", err)
+		return fmt.Errorf("insert error: %v", err)
 	}
 
 	c, err := db.Count(&Article{})
 	if err != nil {
-		fmt.Println(err)
-		return
+		return fmt.Errorf("count error: %v", err)
 	}
+	log.Printf("Number of articles populated: %d\n", c)
 
-	fmt.Println("Number of articles: ", c)
-
-	tables, err := db.DBMetas()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	for _, table := range tables {
-		fmt.Println(table.Name)
-	}
-}
-
-func initDB() {
-	fmt.Println("initializing db...")
-	if dbConnection == "" {
-		dbConnection = os.Getenv("DATABASE_URL")
-	}
-	fmt.Println("DB CONNECTION RULES: ", dbConnection)
-
-	var err error
-	db, err = xorm.NewEngine("postgres", dbConnection)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	if dev {
-		db.ShowSQL(true)
-		populateDB()
-	}
+	return nil
 }
