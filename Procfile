@@ -1,1 +1,1 @@
-web: babajka-go --dev
+web: babajka-go
