@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 )
 
@@ -12,7 +13,11 @@ type IndexPage struct {
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(templateList("index/index", "navbar", "footer", "index/regular-tile", "header")...)
+	tmpl, err := template.ParseFiles(templateList("index")...)
+	if err != nil {
+		log.Println("failed to parse template:", err)
+		return
+	}
 
 	indexPage := &IndexPage{
 		Top3:    []Article{getArticleFromDB("1"), getArticleFromDB("2"), getArticleFromDB("3")},

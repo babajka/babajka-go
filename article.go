@@ -33,7 +33,7 @@ func handleArticle(w http.ResponseWriter, r *http.Request) {
 		Featured: []Article{getArticleFromDB("1"), getArticleFromDB("2"), getArticleFromDB("3")},
 	}
 
-	tmpl, _ := template.ParseFiles(templateList("article/base", "navbar", "footer", "article/featured-tile", "header")...)
+	tmpl, _ := template.ParseFiles(templateList("article")...)
 
 	tmpl.Execute(w, articleWrapper)
 }
